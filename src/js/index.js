@@ -2,25 +2,24 @@ global._babelPolyfill = false;
 
 import * as BABYLON from 'babylonjs';
 
-var timber = {
-   y: '', // size: height
-   x: '', // size: width
-   z: '', // size: depth
-   h: '', // rotation: horizontal
-   v: ''  // rotation: vertical
-}
+var imgGenerator = (function () {
+    var roof = [
+        timber = {
+            y: 0, // size: height
+            x: 0, // size: width
+            z: 0, // size: depth
+            h: 0, // rotation: horizontal
+            v: 0  // rotation: vertical
+        }
+    ]
 
-class Timber {
-    
-    //constructor(thickness, slopeLength, roofWidth, sheetLength, sheetWidth) {
-    constructor(y, x, z, h, v) {
-        this.y = y; // size: height
-        this.x = x; // size: width
-        this.z = z; // size: depth
-        this.h = h; // rotation: horizontal
-        this.v = v; // rotation: vertical
+    return {
+        // TODO 1. recive values: thickness, slopeLength, roofWidth, sheetLength, sheetWidth
+        // TODO 2. calculate number of timbers
+        // TODO 3. create each timber
     }
-}
+})();
+//constructor(thickness, slopeLength, roofWidth, sheetLength, sheetWidth)
 
 window.addEventListener('DOMContentLoaded', function () {
 
