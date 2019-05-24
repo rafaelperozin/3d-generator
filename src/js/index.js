@@ -2,24 +2,27 @@ global._babelPolyfill = false;
 
 import * as BABYLON from 'babylonjs';
 
-var imgGenerator = (function () {
-    var roof = [
-        timber = {
-            y: 0, // size: height
-            x: 0, // size: width
-            z: 0, // size: depth
-            h: 0, // rotation: horizontal
-            v: 0  // rotation: vertical
-        }
-    ]
+// var imgGenerator = (function () {
+//     var roof = [
+//         timber = {
+//             y: 0, // size: height
+//             x: 0, // size: width
+//             z: 0, // size: depth
+//             h: 0, // rotation: horizontal
+//             v: 0  // rotation: vertical
+//         }
+//     ]
 
-    return {
-        // TODO 1. recive values: thickness, slopeLength, roofWidth, sheetLength, sheetWidth
-        // TODO 2. calculate number of timbers
-        // TODO 3. create each timber
-    }
-})();
+//     return {
+//         // TODO 1. recive values: thickness, slopeLength, roofWidth, sheetLength, sheetWidth
+//         // TODO 2. calculate number of timbers
+//         // TODO 3. create each timber
+//     }
+// })();
 //constructor(thickness, slopeLength, roofWidth, sheetLength, sheetWidth)
+var roofHeight = 2*3;
+var roofWidth = 4 * 3;
+var glazBarNum = 2;
 
 window.addEventListener('DOMContentLoaded', function () {
 
@@ -53,72 +56,82 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
         // Add and manipulate meshes in the scene
-        var rafter1 = BABYLON.MeshBuilder.CreateBox("rafter1", { height: 12, width: 0.38, depth: 0.38 }, scene);
-        rafter1.position = new BABYLON.Vector3(5, 5.6, 0);
-        rafter1.rotation = new BABYLON.Vector3(4.71, 1.57085);
-        rafter1.material = mat;
+        var rafterWidth1 = BABYLON.MeshBuilder.CreateBox("rafterWidth1", { height: (roofWidth+1.5), width: 0.38, depth: 0.38 }, scene);
+        rafterWidth1.position = new BABYLON.Vector3(0, 5.6, -((roofHeight)/2));
+        rafterWidth1.rotation = new BABYLON.Vector3(4.71, 1.57085);
+        rafterWidth1.material = mat;
 
-        var rafter5 = BABYLON.MeshBuilder.CreateBox("rafter5", { height: 12, width: 0.38, depth: 0.38 }, scene);
-        rafter5.position = new BABYLON.Vector3(5, 5.6, 3);
-        rafter5.rotation = new BABYLON.Vector3(4.71, 1.57085);
-        rafter5.material = mat;
+        var rafterWidth2 = BABYLON.MeshBuilder.CreateBox("rafterWidth2", { height: (roofWidth+1.5), width: 0.38, depth: 0.38 }, scene);
+        rafterWidth2.position = new BABYLON.Vector3(0, 5.6, ((roofHeight)/2));
+        rafterWidth2.rotation = new BABYLON.Vector3(4.71, 1.57085);
+        rafterWidth2.material = mat;
 
-        var rafter2 = BABYLON.MeshBuilder.CreateBox("rafter2", { height: 12, width: 0.38, depth: 0.38 }, scene);
-        rafter2.position = new BABYLON.Vector3(5, 5.6, 6);
-        rafter2.rotation = new BABYLON.Vector3(4.71, 1.57085);
-        rafter2.material = mat;
+        var rafterLength1 = BABYLON.MeshBuilder.CreateBox("rafterLength1", { height: (roofHeight+1.5), width: 0.38, depth: 0.38 }, scene);
+        rafterLength1.position = new BABYLON.Vector3(-((roofWidth)-((roofWidth)/2)), 5.6, 0);
+        rafterLength1.rotation = new BABYLON.Vector3(4.71, 0);
+        rafterLength1.material = mat;
 
-        var rafter3 = BABYLON.MeshBuilder.CreateBox("rafter3", { height: 6, width: 0.38, depth: 0.38 }, scene);
-        rafter3.position = new BABYLON.Vector3(0, 5.6, 3);
-        rafter3.rotation = new BABYLON.Vector3(4.71, 0);
-        rafter3.material = mat;
+        var rafterLength2 = BABYLON.MeshBuilder.CreateBox("rafterLength2", { height: (roofHeight+1.5), width: 0.38, depth: 0.38 }, scene);
+        rafterLength2.position = new BABYLON.Vector3(((roofWidth)-((roofWidth)/2)), 5.6, 0);
+        rafterLength2.rotation = new BABYLON.Vector3(4.71, 0);
+        rafterLength2.material = mat;
 
-        var rafter4 = BABYLON.MeshBuilder.CreateBox("rafter4", { height: 6, width: 0.38, depth: 0.38 }, scene);
-        rafter4.position = new BABYLON.Vector3(10, 5.6, 3);
-        rafter4.rotation = new BABYLON.Vector3(4.71, 0);
-        rafter4.material = mat;
+        // TODO dinamically create variable names
+        // gbo = {};
+        // for (var i = 0; i < glazBarNum; i++) {
+        //     gbo['glazzingBar' + i]
+        //     var gbo['glazzingBar' + i] = BABYLON.MeshBuilder.CreateBox("glazzingBar1", { height: (roofHeight+1.5), width: 0.38, depth: 0.38 }, scene);
+        //     gbo['glazzingBar' + i].position = new BABYLON.Vector3(-((roofWidth/glazBarNum)*i), 5.6, 0);
+        //     gbo['glazzingBar' + i].rotation = new BABYLON.Vector3(4.71, 0);
+        //     gbo['glazzingBar' + i].material = mat;    
+        // }
+
+        // var glazzingBar1 = BABYLON.MeshBuilder.CreateBox("glazzingBar1", { height: (roofHeight+1.5), width: 0.38, depth: 0.38 }, scene);
+        // glazzingBar1.position = new BABYLON.Vector3(-((roofWidth/glazBarNum)*i), 5.6, 0);
+        // glazzingBar1.rotation = new BABYLON.Vector3(4.71, 0);
+        // glazzingBar1.material = mat;
 
 
         var col1 = BABYLON.MeshBuilder.CreateBox("col1", { height: 5, width: 0.38, depth: 0.38 }, scene);
-        col1.position = new BABYLON.Vector3(10, 2.9, 0);
+        col1.position = new BABYLON.Vector3((roofWidth/2), 2.9, -(roofHeight/2));
         col1.material = mat;
 
         var col2 = BABYLON.MeshBuilder.CreateBox("col2", { height: 5, width: 0.38, depth: 0.38 }, scene);
-        col2.position = new BABYLON.Vector3(10, 2.9, 6);
+        col2.position = new BABYLON.Vector3((roofWidth/2), 2.9, (roofHeight/2));
         col2.material = mat;
 
         var col3 = BABYLON.MeshBuilder.CreateBox("col3", { height: 5, width: 0.38, depth: 0.38 }, scene);
-        col3.position = new BABYLON.Vector3(0, 2.9, 0);
+        col3.position = new BABYLON.Vector3(-(roofWidth/2), 2.9, -(roofHeight/2));
         col3.material = mat;
 
         var col4 = BABYLON.MeshBuilder.CreateBox("col4", { height: 5, width: 0.38, depth: 0.38 }, scene);
-        col4.position = new BABYLON.Vector3(0, 2.9, 6);
+        col4.position = new BABYLON.Vector3(-(roofWidth/2), 2.9, (roofHeight/2));
         col4.material = mat;
 
-        // DRAG AND DROP #####################################################################################
-        // create  a pointer
-        var pointerDragBehavior = new BABYLON.PointerDragBehavior({ dragAxis: new BABYLON.Vector3(1, 0, 0) });
+        // // DRAG AND DROP #####################################################################################
+        // // create  a pointer
+        // var pointerDragBehavior = new BABYLON.PointerDragBehavior({ dragAxis: new BABYLON.Vector3(1, 0, 0) });
 
-        // Use drag plane in world space
-        pointerDragBehavior.useObjectOrienationForDragging = false;
+        // // Use drag plane in world space
+        // pointerDragBehavior.useObjectOrienationForDragging = false;
 
-        // Listen to drag events
-        pointerDragBehavior.onDragStartObservable.add((event)=>{
-            console.log("dragStart");
-            console.log(event);
-        })
-        pointerDragBehavior.onDragObservable.add((event)=>{
-            console.log("drag");
-            console.log(event);
-        })
-        pointerDragBehavior.onDragEndObservable.add((event)=>{
-            console.log("dragEnd");
-            console.log(event);
-        })
+        // // Listen to drag events
+        // pointerDragBehavior.onDragStartObservable.add((event)=>{
+        //     console.log("dragStart");
+        //     console.log(event);
+        // })
+        // pointerDragBehavior.onDragObservable.add((event)=>{
+        //     console.log("drag");
+        //     console.log(event);
+        // })
+        // pointerDragBehavior.onDragEndObservable.add((event)=>{
+        //     console.log("dragEnd");
+        //     console.log(event);
+        // })
 
-        // enable rafter5 to drag and drop
-        rafter5.addBehavior(pointerDragBehavior);
-        // ###################################################################################################
+        // // enable rafter5 to drag and drop
+        // rafter5.addBehavior(pointerDragBehavior);
+        // // ###################################################################################################
 
         return scene;
 
