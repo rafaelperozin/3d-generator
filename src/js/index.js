@@ -5,10 +5,11 @@ import * as BABYLON from 'babylonjs';
 var rw = 2;
 var rh = 2; // 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5
 var glazBarNum = 2;
-// TODO: fix the inclination
 
-var rightPropostion = 4 / 2;
+var rightPropostion = 2 / 2;
 var currentPropostion = rw / rh;
+console.log(rightPropostion)
+console.log(currentPropostion)
 //var incTilt = 0.015;
 
 var bm = rw;
@@ -17,24 +18,30 @@ if (rh > rw) bm = rh;
 // put in the correct proportion
 var roofHeight = rh * (20 / bm);
 var roofWidth = rw * (20 / bm);
-console.log(roofHeight)
-var stTilt = 4.77; // 2 = 4.83 | 2.5 = 4.81 | 3 = 4.79 | 3.5 = 4.78 | 4 = 4.77 | 4.5 = 4.77 | 5 4.77
+var stTilt = 4.87; // 2 = 4.83 | 2.5 = 4.81 | 3 = 4.79 | 3.5 = 4.78 | 4 = 4.77 | 4.5 = 4.77 | 5 4.77
 //if (currentPropostion < rightPropostion) stTilt -= ((currentPropostion/rightPropostion)*10) * incTilt;
+var stBigColHeight = 18; // 18
+var stBigRafHeight = 8.8; // 8.8
+var stSmallColHeight = 15.2; // 15.2
+var stSamllRafHeight = 5.6; // 5.6
+var stSmallColPosition = -(stSmallColHeight * 0.1); // -1.52
+var stBigColPosition = -(((stBigColHeight * 0.1)-((stBigColHeight * 0.1) * 0.2))-1); // ((18*0.1)-20%)-1 = 0.44
 
-switch (rh) {
-    case 2:
-        stTilt = 4.88;
-        break;
-    case 2.5:
-        stTilt = 4.81;
-        break;
-    case 3:
-        stTilt = 4.79;
-        break;
-    case 3.5:
-        stTilt = 4.78;
-        break;
-}
+// switch (rh) {
+//     case 2:
+//         stTilt = 4.87;
+//         break;
+//     case 2.5:
+//         stTilt = 4.81;
+//         break;
+//     case 3:
+//         stTilt = 4.79;
+//         break;
+//     case 3.5:
+//         stTilt = 4.78;
+//         break;
+// }
+// console.log(stTilt)
 
 window.addEventListener('DOMContentLoaded', function () {
 
@@ -69,7 +76,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
         // Add and manipulate meshes in the scene
         var rafterWidth1 = BABYLON.MeshBuilder.CreateBox("rafterWidth1", { height: (roofWidth+1.5), width: 0.78, depth: 0.78 }, scene);
-        rafterWidth1.position = new BABYLON.Vector3(0, 8.8, -((roofHeight)/2));
+        rafterWidth1.position = new BABYLON.Vector3(0, stBigRafHeight, -((roofHeight)/2));
         rafterWidth1.rotation = new BABYLON.Vector3(4.71, 1.57085);
         rafterWidth1.material = mat;
 
@@ -79,16 +86,16 @@ window.addEventListener('DOMContentLoaded', function () {
         // rafterWidthBase1.material = mat;
 
         var rafterWidth2 = BABYLON.MeshBuilder.CreateBox("rafterWidth2", { height: (roofWidth+1.5), width: 0.78, depth: 0.78 }, scene);
-        rafterWidth2.position = new BABYLON.Vector3(0, 5.6, ((roofHeight)/2));
+        rafterWidth2.position = new BABYLON.Vector3(0, stSamllRafHeight, ((roofHeight)/2));
         rafterWidth2.rotation = new BABYLON.Vector3(4.71, 1.57085);
         rafterWidth2.material = mat;
 
-        var rafterLength1 = BABYLON.MeshBuilder.CreateBox("rafterLength1", { height: (roofHeight+2.5), width: 0.78, depth: 0.78 }, scene);
+        var rafterLength1 = BABYLON.MeshBuilder.CreateBox("rafterLength1", { height: (roofHeight+3), width: 0.78, depth: 0.78 }, scene);
         rafterLength1.position = new BABYLON.Vector3(-((roofWidth)-((roofWidth)/2)), 7.8, 0);
         rafterLength1.rotation = new BABYLON.Vector3(stTilt, 0);
         rafterLength1.material = mat;
 
-        var rafterLength2 = BABYLON.MeshBuilder.CreateBox("rafterLength2", { height: (roofHeight+2.5), width: 0.78, depth: 0.78 }, scene);
+        var rafterLength2 = BABYLON.MeshBuilder.CreateBox("rafterLength2", { height: (roofHeight+3), width: 0.78, depth: 0.78 }, scene);
         rafterLength2.position = new BABYLON.Vector3(((roofWidth)-((roofWidth)/2)), 7.8, 0);
         rafterLength2.rotation = new BABYLON.Vector3(stTilt, 0);
         rafterLength2.material = mat;
@@ -110,7 +117,7 @@ window.addEventListener('DOMContentLoaded', function () {
             var glaPos = ((roofWidth)-((roofWidth)/2)) - (space * i);
 
             window['glazzingBar' + i]
-            window['glazzingBar' + i] = BABYLON.MeshBuilder.CreateBox("glazzingBar"+i, { height: (roofHeight+1.5), width: 0.78, depth: 0.78 }, scene);
+            window['glazzingBar' + i] = BABYLON.MeshBuilder.CreateBox("glazzingBar"+i, { height: (roofHeight+3), width: 0.78, depth: 0.78 }, scene);
             window['glazzingBar' + i].position = new BABYLON.Vector3(glaPos, 7.8, 0);
             window['glazzingBar' + i].rotation = new BABYLON.Vector3(stTilt, 0);
             window['glazzingBar' + i].material = mat;    
@@ -122,20 +129,20 @@ window.addEventListener('DOMContentLoaded', function () {
         // glazzingBar1.material = mat;
 
 
-        var col1 = BABYLON.MeshBuilder.CreateBox("col1", { height: 20, width: 0.78, depth: 0.78 }, scene);
-        col1.position = new BABYLON.Vector3((roofWidth/2), -1.5, -(roofHeight/2));
+        var col1 = BABYLON.MeshBuilder.CreateBox("col1", { height: stBigColHeight, width: 0.78, depth: 0.78 }, scene);
+        col1.position = new BABYLON.Vector3((roofWidth/2), stBigColPosition, -(roofHeight/2));
         col1.material = mat;
 
-        var col2 = BABYLON.MeshBuilder.CreateBox("col2", { height: 15.2, width: 0.78, depth: 0.78 }, scene);
-        col2.position = new BABYLON.Vector3((roofWidth/2), -1.9, (roofHeight/2));
+        var col2 = BABYLON.MeshBuilder.CreateBox("col2", { height: stSmallColHeight, width: 0.78, depth: 0.78 }, scene);
+        col2.position = new BABYLON.Vector3((roofWidth/2), stSmallColPosition, (roofHeight/2));
         col2.material = mat;
 
-        var col3 = BABYLON.MeshBuilder.CreateBox("col3", { height: 20, width: 0.78, depth: 0.78 }, scene);
-        col3.position = new BABYLON.Vector3(-(roofWidth/2), -1.5, -(roofHeight/2));
+        var col3 = BABYLON.MeshBuilder.CreateBox("col3", { height: stBigColHeight, width: 0.78, depth: 0.78 }, scene);
+        col3.position = new BABYLON.Vector3(-(roofWidth/2), stBigColPosition, -(roofHeight/2));
         col3.material = mat;
 
-        var col4 = BABYLON.MeshBuilder.CreateBox("col4", { height: 15.2, width: 0.78, depth: 0.78 }, scene);
-        col4.position = new BABYLON.Vector3(-(roofWidth/2), -1.9, (roofHeight/2));
+        var col4 = BABYLON.MeshBuilder.CreateBox("col4", { height: stSmallColHeight, width: 0.78, depth: 0.78 }, scene);
+        col4.position = new BABYLON.Vector3(-(roofWidth/2), stSmallColPosition, (roofHeight/2));
         col4.material = mat;
 
         // // DRAG AND DROP #####################################################################################
